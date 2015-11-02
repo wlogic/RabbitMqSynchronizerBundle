@@ -20,19 +20,17 @@ class Broker
 
     public function registerConsumer(Consumer $consumer)
     {
-        foreach ($consumer->getQueueOptions()['routing_keys'] as $routingKey) {
             $this->dispatcher->addListener(
-                $routingKey,
+                'rabbit.sync.' . $consumer->getExchangeOptions()['name'],
                 array(
                     new AMQPMessageListener($consumer, $routingKey),
                     'execute',
                 )
             );
-        }
     }
 
-    public function notifyConsumers($routingKey, AMQPMessageEvent $event)
+    public function notifyConsumers($exchangeName, AMQPMessageEvent $event)
     {
-        $this->dispatcher->dispatch($routingKey, $event);
+        $this->dispatcher->dispatch('rabbit.sync.' . $exchangeName, $event);
     }
 }

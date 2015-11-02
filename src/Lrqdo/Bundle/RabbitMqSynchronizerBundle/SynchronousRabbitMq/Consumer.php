@@ -9,6 +9,11 @@ class Consumer extends \OldSound\RabbitMqBundle\RabbitMq\Consumer
         return $this->queueOptions;
     }
 
+    public function getExchangeOptions()
+    {
+      	return $this->exchangeOptions;
+    }
+
     public function getCallback()
     {
         return $this->callback;
