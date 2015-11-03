@@ -23,7 +23,7 @@ class Broker
             $this->dispatcher->addListener(
                 'rabbit.sync.' . $consumer->getExchangeOptions()['name'],
                 array(
-                    new AMQPMessageListener($consumer, $routingKey),
+                    new AMQPMessageListener($consumer),
                     'execute',
                 )
             );
